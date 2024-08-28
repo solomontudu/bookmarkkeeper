@@ -108,8 +108,7 @@ function deleteBookmark(url) {
   });
   // update bookmarks array in localStorage, re-populate DOM
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  // fetchBookmarks();
-  location.reload();
+  fetchBookmarks();
 }
 
 // handle data from form
