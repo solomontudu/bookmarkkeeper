@@ -44,6 +44,40 @@ function validate(nameValue, urlValue) {
   return true;
 }
 
+// build bookmarks DOM
+function buildBookmarks() {
+  bookmarks.forEach((bookMark) => {
+    const { name, url } = bookMark;
+    // item
+    const item = document.createElement("div");
+    item.classList.add("item");
+    // close icon
+    const closeIcon = document.createElement("i");
+    closeIcon.classList.add("fas", "fa-trash");
+    closeIcon.setAttribute("title", "Delete Bookmark");
+    closeIcon.setAttribute("onclick", `deleteBookmark('${url}')`);
+    // favicon / link container
+    const linkInfo = document.createElement("div");
+    linkInfo.classList.add("name");
+    // favicon
+    const favicon = document.createElement("img");
+    favicon.setAttribute(
+      "src",
+      `https://s2.googleusercontent.com/s2/favicons?domain=${url}`
+    );
+    favicon.setAttribute("alt", "Favicon");
+    // link
+    const link = document.createElement("a");
+    link.setAttribute("href", `${url}`);
+    link.setAttribute("target", "_blank");
+    link.textContent = name;
+    // append to bookmarks container
+    linkInfo.append(favicon, link,closeIcon);
+    item.append(linkInfo);
+    bookmarksContainer.appendChild(item);
+  });
+}
+
 // fetch bookmarks
 function fetchBookmarks() {
   // get bookmarks for localStorage if available
@@ -59,6 +93,7 @@ function fetchBookmarks() {
     ];
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
+  buildBookmarks();
 }
 
 // handle data from form
